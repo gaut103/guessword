@@ -1,0 +1,50 @@
+import random
+
+# List of words for the game
+word_list = ["python", "java", "programming", "computer", "algorithm", "keyboard"]
+
+def choose_word():
+    return random.choice(word_list)
+
+def play_guess_letter_game():
+    word_to_guess = choose_word()
+    guessed_letters = []
+    max_attempts = 6
+    attempts = 0
+
+    print("Welcome to the Guess the Letter Game!")
+    print("Try to guess the word, letter by letter.")
+
+    while True:
+        hidden_word = "".join([letter if letter in guessed_letters else "_" for letter in word_to_guess])
+        print(f"Word to guess: {hidden_word}")
+        print(f"Guessed letters: {', '.join(guessed_letters)}")
+        guess = input("Guess a letter: ").lower()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter a single letter.")
+            continue
+
+        if guess in guessed_letters:
+            print("You've already guessed that letter.")
+            continue
+
+        guessed_letters.append(guess)
+
+        if guess in word_to_guess:
+            print("Good guess!")
+        else:
+            print("Wrong guess!")
+            attempts += 1
+
+        if attempts >= max_attempts:
+            print("You've run out of attempts. Game over!")
+            print(f"The word was: {word_to_guess}")
+            break
+
+        if set(guessed_letters) == set(word_to_guess):
+            print(f"Congratulations! You've guessed the word: {word_to_guess}")
+            break
+
+if __name__ == "__main__":
+    play_guess_letter_game()
